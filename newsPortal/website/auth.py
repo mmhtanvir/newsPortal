@@ -29,7 +29,7 @@ def login():
 
 
 
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 @auth.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -53,14 +53,14 @@ def signup():
         elif len(password) < 8:
             flash('Password too short', category='error')
         else:
-            new_user = User(email=email, name=name, password=generate_password_hash(password, method='scrypt'))
+            new_user = User(email=email, name=name, password=generate_password_hash(password, method='pbkdf2:sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
             flash('User created')
             return redirect(url_for('views.home'))
 
-    return render_template("signup.html")
+    return render_template("signup.html", user=current_user)
 
 @auth.route("/logout")
 @login_required

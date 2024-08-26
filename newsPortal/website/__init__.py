@@ -7,7 +7,9 @@ db = SQLAlchemy()
 DB_NAME = "newsportal"
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='')
+    app.config['UPLOAD_FOLDER'] = 'images'
+
     app.config['SECRET_KEY'] = "secretkey"
     app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql://root:@localhost/{DB_NAME}'
     db.init_app(app)
@@ -18,7 +20,7 @@ def create_app():
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from .models import User
+    from .models import User, Post, Comment
 
     create_database(app)
 
