@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from sqlalchemy import desc
-from .models import Post, User, Comment
+from .models import Post, User, Comment, Role
 from . import db
 import uuid
 
