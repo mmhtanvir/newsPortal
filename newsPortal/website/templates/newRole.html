@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Create a new role</h1>
+<form action="/new_role" method="POST" enctype="multipart/form-data">
+    <input type="text" name="role" id="role" placeholder="">
+    <br> <br>
+    <label for="permisson">Choose permissons :</label>
+    <select id="permisson" name="permisson">
+        <option value="create-post">Select permissions</option>
+        <option value="create-post">Create Post</option>
+        <option value="delete-post">Delete Post</option>
+        <option value="update-post">Update Post</option>
+        <option value="approve-post">Approve Post</option>
+        <option value="reject-post">Reject Post</option>
+        <option value="ban-user">Ban User</option>
+        <option value="all">All</option>
+    </select>
+    <br> <br>
+    <button type="submit">Create</button>
+</form>
+
+{% endblock %}

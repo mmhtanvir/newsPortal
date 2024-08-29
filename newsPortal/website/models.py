@@ -10,7 +10,9 @@ class User(db.Model, UserMixin):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     posts = db.relationship('Post', backref='user', passive_deletes=True)
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
-    role = db.relationship('Role', backref='user')
+    # role_given_by = db.relationship('Role', backref='user')
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete="CASCADE"), nullable=False)
+    role = db.relationship('Role', backref='users')
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,6 +30,5 @@ class Comment(db.Model):
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(255), nullable=False)
+    role_name = db.Column(db.String(255), nullable=False)
     permisson = db.Column(db.String(255), nullable=False)
-    user_id  = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

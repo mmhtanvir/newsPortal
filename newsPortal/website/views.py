@@ -96,3 +96,28 @@ def delete_comment(comment_id):
         db.session.commit()
 
     return redirect(url_for('views.home'))
+
+@views.route("/admin-panel")
+@login_required
+def admin():
+    return render_template("admin.html", user=current_user)
+
+@views.route("/new_role", methods=['GET', 'POST'])
+@login_required
+def new_role():
+    if request.method == "POST":
+        role_name = request.form.get('role')
+        permisson = request.form.get('permisson')
+
+        if not role_name:
+            flash('Role name cannot be empty', category='error')
+        elif not permisson == "Select permissions":
+            flash('Permissions cannot be empty or invalid', category='error')
+        else:
+            role = Role(role_name=role_name, permisson=permisson)
+            db.session.add(role)
+            db.session.commit()
+            flash('Role created!', category='success')
+            return redirect(url_for('views.admin'))
+        
+    return render_template("newRole.html", user=current_user) 

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from . import db
-from .models import User 
+from .models import User , Role
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -53,7 +53,8 @@ def signup():
         elif len(password) < 8:
             flash('Password too short', category='error')
         else:
-            new_user = User(email=email, name=name, password=generate_password_hash(password, method='pbkdf2:sha256'))
+            role = Role.query.first() 
+            new_user = User(email=email, name=name, role_id = role.id, password=generate_password_hash(password, method='pbkdf2:sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
