@@ -10,7 +10,6 @@ class User(db.Model, UserMixin):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     posts = db.relationship('Post', backref='user', passive_deletes=True)
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
-    # role_given_by = db.relationship('Role', backref='user')
     role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete="CASCADE"), nullable=False)
     role = db.relationship('Role', backref='users')
 
@@ -19,7 +18,10 @@ class Post(db.Model):
     text = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    post_status = db.Column(db.String(50), default='pending')
     comments = db.relationship('Comment', backref='post', passive_deletes=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete="CASCADE"), nullable=False)
+    role = db.relationship('Role', backref='post')
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,6 +29,8 @@ class Comment(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete="CASCADE"), nullable=False)
+    role = db.relationship('Role', backref='comment')
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)

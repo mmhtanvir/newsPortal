@@ -28,7 +28,8 @@ def create_post():
         if not text:
             flash('Text & Images cannot be empty', category='error')
         else:
-            post = Post(text=text, author=current_user.id)
+            role = Role.query.first() 
+            post = Post(text=text, role_id = role.id, author=current_user.id)
             db.session.add(post)
             db.session.commit()
             flash('Post created!', category='success')
@@ -74,7 +75,8 @@ def create_comment(post_id):
     else:
         post = Post.query.filter_by(id=post_id)
         if post:
-            comment = Comment(text=text, author=current_user.id, post_id=post_id)
+            role = Role.query.first() 
+            comment = Comment(text=text, author=current_user.id, post_id=post_id, role_id = role.id)
             db.session.add(comment)
             db.session.commit()
         else:
@@ -111,7 +113,7 @@ def new_role():
 
         if not role_name:
             flash('Role name cannot be empty', category='error')
-        elif not permisson == "Select permissions":
+        elif not permisson:
             flash('Permissions cannot be empty or invalid', category='error')
         else:
             role = Role(role_name=role_name, permisson=permisson)
