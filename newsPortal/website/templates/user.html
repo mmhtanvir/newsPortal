@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+Staff : <b>{{user_count}}</b>
+<br>
+<br>
+
+<table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Permisson</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.role.role_name }}</td>
+            <td>{{ user.role.permissions }}</td>
+            <td>
+              {% if user.role.role_name == "admin" %}
+              ------
+              {% else %}
+              <a href="/update/{{user.id}}">Edit</a>
+              <a href="/delete/{{ user.id }}" onclick="return confirm('Are You Sure to Delete This User')">Delete</a>
+              <a href="/ban/{{ user.id }}" onclick="return confirm('Are You Sure to Ban This User')">Ban</a>
+              {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

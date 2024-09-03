@@ -12,12 +12,15 @@
     <div class="container">
       <ul class="flex space-x-4">
         <li><a href="/" class="text-white hover:text-gray-200"><b>Home</b></a></li>
-        {% if user.is_authenticated %}
+        {% if current_user.is_authenticated %}
         <li><a href="/create_post" class="text-white hover:text-gray-200"><b>Create post</b></a></li>
         <li><a href="/logout" class="text-white hover:text-gray-200"><b>Logout</b></a></li>
         {% else %}
         <li><a href="/login" class="text-white hover:text-gray-200"><b>login</b></a></li>
         <li><a href="/signup" class="text-white hover:text-gray-200"><b>signup</b></a></li>
+        {% endif %}
+        {% if user.role.role_name=="admin" %}
+        <li><a href="/admin-panel" class="text-white hover:text-gray-200"><b>admin</b></a></li>
         {% endif %}
       </ul>
     </div>

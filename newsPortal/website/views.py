@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from .models import Post, User, Comment, Role
@@ -107,11 +107,11 @@ def admin():
 def new_role():
     if request.method == "POST":
         role_name = request.form.get('role')
-        permissions = request.form.get('permissions')
+        permissions = request.form.getlist('permissions')
 
         if not role_name:
             flash('Role name cannot be empty', category='error')
-        elif not permissions == "Select permissions":
+        elif not permissions:
             flash('Permissions cannot be empty or invalid', category='error')
         else:
             permissions_str = ','.join(permissions)
@@ -122,3 +122,10 @@ def new_role():
             return redirect(url_for('views.admin'))
         
     return render_template("newRole.html", user=current_user) 
+
+@views.route("/view_users", methods=['GET', 'POST'])
+@login_required
+def list():
+    users = User.query.all()
+    user_count = len(users)
+    return render_template("user.html",user=current_user, users=users, user_count=user_count)
