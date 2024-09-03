@@ -2,21 +2,34 @@
 {% block content %}
 
 <h1>Create a new role</h1>
-<form action="/new_role" method="POST" enctype="multipart/form-data">
-    <input type="text" name="role" id="role" placeholder="">
+<form action="/new_role" method="POST">
+    <input type="text" name="role" id="role" placeholder="Enter role name">
     <br> <br>
-    <label for="permisson">Choose permissons :</label>
-    <select id="permisson" name="permisson">
-        <option value="create-post">Select permissions</option>
-        <option value="view-Posts">View Posts</option>
-        <option value="create-post">Create Post</option>
-        <option value="delete-post">Delete Post</option>
-        <option value="update-post">Update Post</option>
-        <option value="approve-post">Approve Post</option>
-        <option value="reject-post">Reject Post</option>
-        <option value="ban-user">Ban User</option>
-        <option value="all">All</option>
-    </select>
+    <label>Choose permissions :</label>
+    <br>
+    <input type="checkbox" name="permissions" value="view-posts" id="view-posts">
+    <label for="view-posts">View Posts</label>
+    <br>
+    <input type="checkbox" name="permissions" value="create-post" id="create-post">
+    <label for="create-post">Create Post</label>
+    <br>
+    <input type="checkbox" name="permissions" value="delete-post" id="delete-post">
+    <label for="delete-post">Delete Post</label>
+    <br>
+    <input type="checkbox" name="permissions" value="update-post" id="update-post">
+    <label for="update-post">Update Post</label>
+    <br>
+    <input type="checkbox" name="permissions" value="approve-post" id="approve-post">
+    <label for="approve-post">Approve Post</label>
+    <br>
+    <input type="checkbox" name="permissions" value="reject-post" id="reject-post">
+    <label for="reject-post">Reject Post</label>
+    <br>
+    <input type="checkbox" name="permissions" value="ban-user" id="ban-user">
+    <label for="ban-user">Ban User</label>
+    <br>
+    <input type="checkbox" name="permissions" value="all" id="all">
+    <label for="all">All</label>
     <br> <br>
     <button type="submit">Create</button>
 </form>
