@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     posts = db.relationship('Post', backref='user', passive_deletes=True)
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete="CASCADE"), nullable=False, default=3)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False, default=3)
     role = db.relationship('Role', backref='users')
 
 class Post(db.Model):

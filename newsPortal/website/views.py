@@ -3,7 +3,6 @@ from flask_login import login_required, current_user
 from sqlalchemy import desc
 from .models import Post, User, Comment, Role
 from . import db
-import uuid
 
 views = Blueprint("views", __name__)
 
@@ -19,12 +18,6 @@ def home():
 def create_post():
     if request.method == "POST":
         text = request.form.get('text')
-        # img = str(uuid.uuid4())
-        # image = request.files.get('image')
-        # image_filename = 'images/' + img + '.jpg'
-        # image.save('images/' + img + '.jpg')
-        # print(image_filename)
-
         if not text:
             flash('Text & Images cannot be empty', category='error')
         else:
@@ -129,3 +122,33 @@ def list():
     users = User.query.all()
     user_count = len(users)
     return render_template("user.html",user=current_user, users=users, user_count=user_count)
+
+@views.route("/update/<int:user_id>", methods=['GET', 'POST'])
+@login_required
+def update(user_id):
+    user = User.query.get(user_id)
+    roles = Role.query.all()
+
+    if request.method == 'POST':
+        new_role_id = request.form.get('role_id')
+        
+        if new_role_id:
+            user.role_id = new_role_id
+            db.session.commit()
+            flash("Data Updated Successfully", "success")
+        
+        return redirect(url_for('views.list', user_id=user_id))
+
+    return render_template("edit.html", user=user, roles=roles)
+
+@views.route("/delete/<int:user_id>")
+@login_required
+def u_delete(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        flash('User does not exist.', category='error')
+    else:
+        db.session.delete(user)
+        db.session.commit()
+        
+    return redirect(url_for('views.list'))
