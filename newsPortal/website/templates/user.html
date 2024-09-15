@@ -22,7 +22,7 @@ Staff : <b>{{user_count}}</b>
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.role.role_name }}</td>
-            <td>{{ user.role.permissions }}</td>
+            <td>{{ user.role.permission }}</td>
             <td>
               {% if user.role.role_name == "admin" %}
               ------

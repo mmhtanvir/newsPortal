@@ -28,6 +28,11 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
 
 class Role(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True, nullable=False)
     role_name = db.Column(db.String(255), nullable=False)
-    permissions = db.Column(db.String(255), nullable=False)
+    permission = db.relationship('Permission', backref='role',)
+    
+class Permission(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True, nullable=False)
+    permission = db.Column(db.String(255), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
