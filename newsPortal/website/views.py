@@ -100,22 +100,24 @@ def admin():
 def new_role():
     if request.method == "POST":
         role_name = request.form.get('role')
-        permission = request.form.getlist('permission')
-
+        permissions = request.form.getlist('permission')
         if not role_name:
             flash('Role name cannot be empty', category='error')
-        elif not permission:
-            flash('permission cannot be empty or invalid', category='error')
+        elif not permissions:
+            flash('Permissions cannot be empty or invalid', category='error')
         else:
             role = Role(role_name=role_name)
-            permission = Permission(permission=permission, role_id=role.id)
             db.session.add(role)
-            db.session.add(permission)
             db.session.commit()
-            flash('Role created!', category='success')
+            print(role.id)
+            permissions_data = [{'permission': perm, 'role_id': role.id} for perm in permissions]
+            db.session.bulk_insert_mappings(Permission, permissions_data)
+            db.session.commit()
+            flash('Role and permissions created!', category='success')
             return redirect(url_for('views.admin'))
-        
-    return render_template("newRole.html", user=current_user) 
+
+    return render_template("newRole.html", user=current_user)
+
 
 @views.route("/view_users", methods=['GET', 'POST'])
 @login_required
