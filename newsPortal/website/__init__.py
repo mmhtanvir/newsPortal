@@ -21,6 +21,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix="/")
 
     from .models import User, Post, Comment, Role
+    from .decortators import permission_required
 
     create_database(app)
 

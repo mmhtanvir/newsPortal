@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from .models import Post, User, Comment, Role, Permission
+from .decortators import permission_required
 from . import db
 
 views = Blueprint("views", __name__)
@@ -14,6 +15,7 @@ def home():
     return render_template("home.html", user=current_user, posts=posts)
 
 @views.route("/create_post", methods=['GET', 'POST'])
+@permission_required('create-post')
 @login_required
 def create_post():
     if request.method == "POST":
