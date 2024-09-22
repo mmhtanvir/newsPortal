@@ -9,6 +9,7 @@ views = Blueprint("views", __name__)
 
 @views.route("/")
 @views.route("/home")
+@permission_required('view-posts')
 @login_required
 def home():
     posts = Post.query.order_by(desc(Post.date_created)).all()
@@ -20,6 +21,7 @@ def home():
 def create_post():
     if request.method == "POST":
         text = request.form.get('text')
+        print(f"Required permission: {current_user.role.permission}")
         if not text:
             flash('Text & Images cannot be empty', category='error')
         else:
@@ -145,15 +147,3 @@ def update(user_id):
         return redirect(url_for('views.list', user_id=user_id))
 
     return render_template("edit.html", user=user, roles=roles)
-
-@views.route("/delete/<int:user_id>")
-@login_required
-def u_delete(user_id):
-    user = User.query.get(user_id)
-    if not user:
-        flash('User does not exist.', category='error')
-    else:
-        db.session.delete(user)
-        db.session.commit()
-        
-    return redirect(url_for('views.list'))
