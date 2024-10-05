@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import abort, session
+from flask import abort
 from flask_login import current_user
 from .models import Role, Permission
 from . import db

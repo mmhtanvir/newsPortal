@@ -13,7 +13,7 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     posts = Post.query.order_by(desc(Post.date_created)).all()
-    return render_template("home.html", user=current_user, posts=posts)
+    return render_template("index.html", user=current_user, posts=posts)
 
 @views.route("/create_post", methods=['GET', 'POST'])
 @permission_required('create-post')
@@ -34,6 +34,7 @@ def create_post():
     return render_template("create_post.html", user=current_user)
 
 @views.route("/delete/<id>")
+@permission_required('delete-post')
 @login_required
 def delete(id):
     post = Post.query.filter_by(id=id).first()
@@ -50,6 +51,7 @@ def delete(id):
     return redirect(url_for('views.home'))
 
 @views.route("/posts/<name>")
+@permission_required('view-posts')
 @login_required
 def posts(name):
     user = User.query.filter_by(name=name).first()

@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-{% if user.role.role_name=="admin" %}
-<li><a href="/admin-panel" class="text-white hover:text-gray-200"><b>admin</b></a></li>
-{% endif %}
 <br><br>
 {% for post in posts %}
 <div class="box">
