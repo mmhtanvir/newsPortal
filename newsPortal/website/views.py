@@ -9,7 +9,6 @@ views = Blueprint("views", __name__)
 
 @views.route("/")
 @views.route("/home")
-@permission_required('view-posts')
 @login_required
 def home():
     posts = Post.query.order_by(desc(Post.date_created)).all()
@@ -21,11 +20,11 @@ def home():
 def create_post():
     if request.method == "POST":
         text = request.form.get('text')
-        print(f"Required permission: {current_user.role.permission}")
-        if not text:
+        description = request.form.get('description')
+        if not text or not description:
             flash('Text & Images cannot be empty', category='error')
         else:
-            post = Post(text=text, author=current_user.id)
+            post = Post(text=text,description=description, author=current_user.id)
             db.session.add(post)
             db.session.commit()
             flash('Post created!', category='success')
@@ -50,20 +49,15 @@ def delete(id):
 
     return redirect(url_for('views.home'))
 
-@views.route("/posts/<name>")
+@views.route("/posts/<text>", methods=['GET', 'POST'])
 @permission_required('view-posts')
 @login_required
-def posts(name):
-    user = User.query.filter_by(name=name).first()
+def posts(text):
+    post = Post.query.filter_by(text=text).first()
+    print(post)
+    return render_template("posts_div.html", user=current_user, post=post)
 
-    if not user:
-        flash('No  User exists.', category='error')
-        return redirect(url_for('views.home'))
-
-    posts = Post.query.filter_by(author=user.id).all()
-    return render_template("posts.html", user=current_user, posts=posts, name=name)
-
-@views.route("/comment/<post_id>", methods=['POST'])
+@views.route("/comment/<post_id>", methods=['GET', 'POST'])
 @login_required
 def create_comment(post_id):
     text = request.form.get('text')

@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Create a post</h1>
-<form action="/create_post" method="POST" enctype="multipart/form-data">
-    <textarea name="text" id="text"></textarea>
-    <br>
-    <!-- <input type="file" name="image" id="image"> -->
-    <br>
-    <button type="submit">Post</button>
-</form>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="post-form border rounded p-4 shadow  bg-gray-850 border-gray-800">
+        <h2 class="text-center text-white mx-5 my-2 mb-4">Create a Post</h2>
+        <form action="#" method="POST">
+            <div class="mb-3">
+            <label for="caption" class="form-label color-gray-500">Caption</label>
+            <input  type="text"  id="caption" name="text"  class="form-control bg-gray-850 border-gray-800 color-gray-500"  placeholder="Enter your caption here"  required aria-label="Caption">
+            </div>
+            <div class="mb-3">
+            <label for="description" class="form-label color-gray-500">Description</label>
+            <textarea  id="description" name="description"  class="form-control bg-gray-850 border-gray-800 color-gray-500"  rows="4"  placeholder="Enter your description here"  required aria-label="Description"
+            ></textarea>
+            </div>
+            <div class="d-grid">
+            <button class="btn btn-linear btn-load-more btn-radius-8 hover-up" type="submit">Submit Post</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

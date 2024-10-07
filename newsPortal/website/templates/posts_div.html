@@ -1,3 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
+<main class="main">
+  <div class="cover-home3">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-1"></div>
+        <div class="col-xl-10 col-lg-12">
+          <div class="row mt-50 align-items-end">
+            {% if post %}
+            <div class="col-lg-9 col-md-8">
+              <h2 class="color-linear mb-30">{{ post.text }}</h2>
+              <div class="box-author mb-20">
+                <img src="assets/imgs/page/about/author2.png" alt="Author">
+                <div class="author-info">
+                  <h6 class="color-gray-700">{{ post.user.name }}</h6>
+                  <span class="color-gray-700 text-sm mr-30">{{ post.date_created }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+              <div class="box-share border-gray-800">
+                <h6 class="d-inline-block color-gray-500 mr-10">Share</h6>
+                <a class="icon-media icon-fb" href="#"></a>
+                <a class="icon-media icon-tw" href="#"></a>
+                <a class="icon-media icon-printest" href="#"></a>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-50">
+            <div class="col-lg-8">
+              <div class="content-detail border-gray-800">
+                {{ post.description }}
+              </div>
+              <div class="box-comments border-gray-800">
+                <h3 class="text-heading-2 color-gray-300">Comments</h3>
+                <div class="list-comments-single">
+                  {% for comment in post.comments %}
+                  <div class="item-comment">
+                    <div class="comment-left">
+                      <div class="box-author mb-20">
+                        <img src="assets/imgs/page/single/author.png" alt="Comment Author">
+                        <div class="author-info">
+                          <h6 class="color-gray-700">{{ comment.user.name }}</h6>
+                          <span class="color-gray-700 text-sm mr-30">{{ comment.date_created }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="comment-right">
+                      <div class="text-comment text-xl color-gray-500 bg-gray-850 border-gray-800">{{ comment.text }}</div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="box-form-comments mb-50">
+                <h4 class="text-heading-4 color-gray-300 mb-40">Leave a comment</h4>
+                <div class="box-forms">
+                  <form action="/comment/{{ post.id }}" method="POST">
+                    <textarea class="form-control bg-gray-850 border-gray-800 bdrd16 color-gray-500" name="text" rows="5" placeholder="Write a comment"></textarea>
+                    <div class="row mt-20">
+                      <div class="col-sm-6 text-end">
+                        <button type="submit" class="btn btn-linear">Post Comment</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {% else %}
+            <div class="col-lg-12">
+              <h2 class="color-linear">Post not found.</h2>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 {% endblock %}

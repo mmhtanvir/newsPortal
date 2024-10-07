@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import abort
+from flask import render_template
 from flask_login import current_user
 from .models import Role, Permission
 from . import db
@@ -12,7 +12,7 @@ def permission_required(permission):
         @wraps(f)
         def decorated_function(*args, **kwargs):
             if not current_user.is_authenticated:
-                abort(403)
+                return render_template("404.html", user=current_user)
             
             print(current_user)
             permissions = db.session.query(Permission.permission).join(Role.permission).filter(current_user.role_id == Permission.role_id,
@@ -25,7 +25,7 @@ def permission_required(permission):
             else:
                 print("Permission denied.")
             if permissions is None != permission:
-                abort(403)
+                return render_template("404.html", user=current_user)
             
             return f(*args, **kwargs)
         return decorated_function
