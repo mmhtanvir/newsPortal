@@ -1110,7 +1110,7 @@ a.text-brand-3:hover {
 .btn.btn-search {
   height: 42px;
   width: 42px;
-  background: url(../imgs/template/icons/icon-search.svg) no-repeat center;
+  background: url(../static/icons/icon-search.svg) no-repeat center;
 }
 .btn.btn-load-more {
   border-radius: 80px;
@@ -2403,7 +2403,7 @@ input {
   width: 40px;
   height: 22px;
   margin-left: 0px;
-  background-image: url(../imgs/template/icons/mode.svg);
+  background-image: url(../static/icons/mode.svg);
   background-position: left 2px center;
   background-color: #7F92B0;
   border-color: #7F92B0;
@@ -2415,7 +2415,7 @@ input {
 }
 .switch-button .form-switch .form-check-input:checked {
   background-position: right 2px center;
-  background-image: url(../imgs/template/icons/mode.svg);
+  background-image: url(../static/icons/mode.svg);
 }
 
 .sticky-bar.stick {
@@ -6834,7 +6834,7 @@ iframe.google-map {
   display: none;
 }
 .theme-day .switch-button .form-switch .form-check-input {
-  background-image: url(../imgs/template/icons/mode-day.svg);
+  background-image: url(../static/icons/mode-day.svg);
 }
 .theme-day .pagination li a {
   background-color: #7F92B0;

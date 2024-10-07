@@ -1,34 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Create a new role</h1>
-<form action="/new_role" method="POST">
-    <input type="text" name="role" id="role" placeholder="Enter role name">
-    <br> <br>
-    <label>Choose permission :</label>
-    <br>
-    <input type="checkbox" name="permission" value="view-posts" id="view-posts">
-    <label for="view-posts">View Posts</label>
-    <br>
-    <input type="checkbox" name="permission" value="create-post" id="create-post">
-    <label for="create-post">Create Post</label>
-    <br>
-    <input type="checkbox" name="permission" value="delete-post" id="delete-post">
-    <label for="delete-post">Delete Post</label>
-    <br>
-    <input type="checkbox" name="permission" value="update-post" id="update-post">
-    <label for="update-post">Update Post</label>
-    <br>
-    <input type="checkbox" name="permission" value="approve-post" id="approve-post">
-    <label for="approve-post">Approve Post</label>
-    <br>
-    <input type="checkbox" name="permission" value="reject-post" id="reject-post">
-    <label for="reject-post">Reject Post</label>
-    <br>
-    <input type="checkbox" name="permission" value="ban-user" id="ban-user">
-    <label for="ban-user">Ban User</label>
-    <br> <br>
-    <button type="submit">Create</button>
-</form>
-
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="form-login bg-gray-850 border-gray-800 p-5 rounded shadow my-5">
+        <h3 class=" color-gray-500">Create a new role</h3>
+        <form action="/new_role" method="POST">
+            <div class="form-group mt-3">
+                <input class="form-control bg-gray-850 border-gray-800" type="text" name="role" id="role" placeholder="Enter role name">
+            </div>
+            <br>
+            <label>Choose permission :</label>
+            <br>
+            <br>
+            <div>
+                <input type="checkbox" name="permission" value="view-posts" id="view-posts">
+                <label for="view-posts">View Posts</label>
+                <br>
+                <input type="checkbox" name="permission" value="create-post" id="create-post">
+                <label for="create-post">Create Post</label>
+                <br>
+                <input type="checkbox" name="permission" value="delete-post" id="delete-post">
+                <label for="delete-post">Delete Post</label>
+                <br>
+                <input type="checkbox" name="permission" value="update-post" id="update-post">
+                <label for="update-post">Update Post</label>
+                <br>
+                <input type="checkbox" name="permission" value="approve-post" id="approve-post">
+                <label for="approve-post">Approve Post</label>
+                <br>
+                <input type="checkbox" name="permission" value="reject-post" id="reject-post">
+                <label for="reject-post">Reject Post</label>
+                <br>
+                <input type="checkbox" name="permission" value="ban-user" id="ban-user">
+                <label for="ban-user">Ban User</label>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-linear">Create</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
